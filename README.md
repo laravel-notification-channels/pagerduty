@@ -9,8 +9,6 @@
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/pagerduty/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/pagerduty/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/pagerduty.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/pagerduty)
 
-##### TODO: Update badges when this repo finds it's home
-
 This package makes it easy to send notification events to [PagerDuty](https://www.pagerduty.com) with Laravel 5.3.
 
 ## Contents
@@ -29,13 +27,13 @@ This package makes it easy to send notification events to [PagerDuty](https://ww
 
 ## Installation
 
+##### TODO: Get this published on composer.
+
 You can install the package via composer:
 
 ```bash
 composer require laravel-notification-channels/pagerduty
 ```
-
-##### TODO: Validate that the above composer package name is where this ends up.
 
 ## Usage
 
