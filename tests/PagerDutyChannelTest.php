@@ -12,7 +12,8 @@ use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 
 class ChannelTest extends \PHPUnit_Framework_TestCase
 {
-    public function tearDown() {
+    public function tearDown()
+    {
         Mockery::close();
     }
 
