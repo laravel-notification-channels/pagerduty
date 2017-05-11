@@ -55,6 +55,7 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
             ->severity('error')
             ->timestamp('timestamp')
             ->component('nginx')
+            ->group('app servers')
             ->setClass('ping failure')
             ->summary('This is a test message')
             ->source('testSource');
@@ -69,6 +70,7 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
                     'summary' => 'This is a test message',
                     'timestamp' => 'timestamp',
                     'component' => 'nginx',
+                    'group' => 'app servers',
                     'class' => 'ping failure',
                 ],
                 'dedup_key' => 'testMessage01',
