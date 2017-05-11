@@ -4,7 +4,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/laravel-notification-channels/pagerduty/master.svg?style=flat-square)](https://travis-ci.org/laravel-notification-channels/pagerduty)
 [![StyleCI](https://styleci.io/repos/90993408/shield)](https://styleci.io/repos/90993408)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/:sensio_labs_id.svg?style=flat-square)](https://insight.sensiolabs.com/projects/:sensio_labs_id)
+[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/320fd214-7e74-4f71-ab10-f3f979e01a10.svg?style=flat-square)](https://insight.sensiolabs.com/projects/320fd214-7e74-4f71-ab10-f3f979e01a10)
 [![Quality Score](https://img.shields.io/scrutinizer/g/laravel-notification-channels/pagerduty.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/pagerduty)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/pagerduty/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/pagerduty/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/pagerduty.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/pagerduty)
