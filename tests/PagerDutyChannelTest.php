@@ -5,7 +5,7 @@ namespace NotificationChannels\PagerDuty\Test;
 use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
-use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PagerDuty\PagerDutyChannel;
 use NotificationChannels\PagerDuty\PagerDutyMessage;

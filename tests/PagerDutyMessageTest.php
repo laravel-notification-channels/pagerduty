@@ -2,7 +2,7 @@
 
 namespace NotificationChannels\PagerDuty\Test;
 
-use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\TestCase;
 use NotificationChannels\PagerDuty\PagerDutyMessage;
 
 class PagerDutyMessageTest extends TestCase
