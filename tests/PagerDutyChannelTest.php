@@ -12,6 +12,10 @@ use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 
 class ChannelTest extends \PHPUnit_Framework_TestCase
 {
+    public function tearDown() {
+        Mockery::close();
+    }
+
     /** @test */
     public function it_can_send_a_notification()
     {
@@ -26,6 +30,15 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
             ->andReturn($response);
         $channel = new PagerDutyChannel($client);
         $channel->send(new TestNotifiable(), new TestNotification());
+    }
+
+    /** @test */
+    public function it_skips_when_not_routable()
+    {
+        $client = Mockery::mock(Client::class);
+        $client->shouldNotReceive('post');
+        $channel = new PagerDutyChannel($client);
+        $channel->send(new TestNotifiableUnRoutable(), new TestNotification());
     }
 
     /** @test */
@@ -86,6 +99,23 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
         $channel = new PagerDutyChannel($client);
         $channel->send(new TestNotifiable(), new TestNotification());
     }
+
+    /** @test */
+    public function it_throws_exception_on_unexpected_code()
+    {
+        $this->setExpectedException(
+            CouldNotSendNotification::class,
+            'PagerDuty responded with an unexpected HTTP Status: 503'
+        );
+
+        $response = new Response(503, [], '', '1.1', 'Service Unavailable');
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('post')
+            ->once()
+            ->andReturn($response);
+        $channel = new PagerDutyChannel($client);
+        $channel->send(new TestNotifiable(), new TestNotification());
+    }
 }
 
 class TestNotifiable
@@ -99,6 +129,11 @@ class TestNotifiable
     {
         return 'eventSource01';
     }
+}
+
+class TestNotifiableUnRoutable
+{
+    use \Illuminate\Notifications\Notifiable;
 }
 
 class TestNotification extends Notification
