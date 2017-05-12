@@ -4,6 +4,7 @@ namespace NotificationChannels\PagerDuty;
 
 use GuzzleHttp\Client;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\PagerDuty\Exceptions\ApiError;
 use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 
 class PagerDutyChannel
@@ -36,21 +37,34 @@ class PagerDutyChannel
         $data = $notification->toPagerDuty($notifiable);
         $data->routingKey($routing_key);
 
-        $response = $this->client->post('https://events.pagerduty.com/v2/enqueue', [
-            'body' => json_encode($data->toArray()),
-        ]);
+        try {
+            $response = $this->client->post('https://events.pagerduty.com/v2/enqueue', [
+                'body' => json_encode($data->toArray()),
+            ]);
+        } catch (\Exception $e) {
+            throw CouldNotSendNotification::create($e);
+        }
 
+        $this->handleResponse($response);
+    }
+
+    /**
+     * @param $response
+     *
+     * @throws ApiError
+     */
+    public function handleResponse($response) {
         switch ($response->getStatusCode()) {
             case 200:
             case 201:
             case 202:
                 return;
             case 400:
-                throw CouldNotSendNotification::serviceBadRequest($response->getBody());
+                throw ApiError::serviceBadRequest($response->getBody());
             case 429:
-                throw CouldNotSendNotification::rateLimit();
+                throw ApiError::rateLimit();
             default:
-                throw CouldNotSendNotification::unknownError($response->getStatusCode());
+                throw ApiError::unknownError($response->getStatusCode());
         }
     }
 }

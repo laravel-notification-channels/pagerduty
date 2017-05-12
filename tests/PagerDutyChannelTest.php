@@ -6,9 +6,10 @@ use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\PagerDuty\Exceptions\ApiError;
+use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 use NotificationChannels\PagerDuty\PagerDutyChannel;
 use NotificationChannels\PagerDuty\PagerDutyMessage;
-use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 
 class ChannelTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,7 +55,7 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
 }';
 
         $this->setExpectedException(
-            CouldNotSendNotification::class,
+            ApiError::class,
             'PagerDuty returned 400 Bad Request: Event object is invalid - Length of \'routing_key\' is incorrect (should be 32 characters)'
         );
 
@@ -71,7 +72,7 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
     public function it_throws_the_expected_exception_if_error_response_doesnt_contain_expected_body_on_error()
     {
         $this->setExpectedException(
-            CouldNotSendNotification::class,
+            ApiError::class,
             'PagerDuty returned 400 Bad Request:  -'
         );
 
@@ -88,7 +89,7 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
     public function it_throws_exception_on_rate_limit()
     {
         $this->setExpectedException(
-            CouldNotSendNotification::class,
+            ApiError::class,
             'PagerDuty returned 429 Too Many Requests'
         );
 
@@ -105,7 +106,7 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
     public function it_throws_exception_on_unexpected_code()
     {
         $this->setExpectedException(
-            CouldNotSendNotification::class,
+            ApiError::class,
             'PagerDuty responded with an unexpected HTTP Status: 503'
         );
 
@@ -114,6 +115,24 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
         $client->shouldReceive('post')
             ->once()
             ->andReturn($response);
+        $channel = new PagerDutyChannel($client);
+        $channel->send(new TestNotifiable(), new TestNotification());
+    }
+
+    /** @test */
+    public function it_rethrows_exception_on_client_exception()
+    {
+        $e = new \Exception("Test Exception");
+
+        $this->setExpectedException(
+            CouldNotSendNotification::class,
+            'Cannot send message to PagerDuty: Test Exception'
+        );
+
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('post')
+            ->once()
+            ->andThrow($e);
         $channel = new PagerDutyChannel($client);
         $channel->send(new TestNotifiable(), new TestNotification());
     }
