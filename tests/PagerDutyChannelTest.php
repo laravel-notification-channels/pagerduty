@@ -6,10 +6,10 @@ use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\PagerDuty\Exceptions\ApiError;
-use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 use NotificationChannels\PagerDuty\PagerDutyChannel;
 use NotificationChannels\PagerDuty\PagerDutyMessage;
+use NotificationChannels\PagerDuty\Exceptions\ApiError;
+use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 
 class ChannelTest extends \PHPUnit_Framework_TestCase
 {
@@ -122,7 +122,7 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_rethrows_exception_on_client_exception()
     {
-        $e = new \Exception("Test Exception");
+        $e = new \Exception('Test Exception');
 
         $this->setExpectedException(
             CouldNotSendNotification::class,

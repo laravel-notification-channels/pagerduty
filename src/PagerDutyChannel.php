@@ -53,7 +53,8 @@ class PagerDutyChannel
      *
      * @throws ApiError
      */
-    public function handleResponse($response) {
+    public function handleResponse($response)
+    {
         switch ($response->getStatusCode()) {
             case 200:
             case 201:
