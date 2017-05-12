@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PagerDuty\PagerDutyChannel;
 use NotificationChannels\PagerDuty\PagerDutyMessage;
-use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 
 class ChannelTest extends TestCase
 {
