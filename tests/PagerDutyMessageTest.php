@@ -2,9 +2,10 @@
 
 namespace NotificationChannels\PagerDuty\Test;
 
+use PHPUnit\Framework\TestCase;
 use NotificationChannels\PagerDuty\PagerDutyMessage;
 
-class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
+class PagerDutyMessageTest extends TestCase
 {
     /** @test */
     public function basic_message_has_all_values()

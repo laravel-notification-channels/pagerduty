@@ -5,13 +5,14 @@ namespace NotificationChannels\PagerDuty\Test;
 use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PagerDuty\PagerDutyChannel;
 use NotificationChannels\PagerDuty\PagerDutyMessage;
 use NotificationChannels\PagerDuty\Exceptions\ApiError;
 use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
 
-class ChannelTest extends \PHPUnit_Framework_TestCase
+class ChannelTest extends TestCase
 {
     public function tearDown()
     {
