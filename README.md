@@ -28,8 +28,6 @@ This package makes it easy to send notification events to [PagerDuty](https://ww
 
 ## Installation
 
-##### TODO: Get this published on composer.
-
 You can install the package via composer:
 
 ```bash
