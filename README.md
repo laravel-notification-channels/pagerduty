@@ -16,6 +16,7 @@ This package makes it easy to send notification events to [PagerDuty](https://ww
 - [Installation](#installation)
 	- [Setting up the PagerDuty service](#setting-up-the-PagerDuty-service)
 - [Usage](#usage)
+    - [PagerDuty Setup](#pagerduty-setup)
 	- [Available Message methods](#available-message-methods)
 - [Changelog](#changelog)
 - [Testing](#testing)
@@ -79,7 +80,7 @@ The `Integration Key` listed for your new integration is what you need to set in
 
 ![List of Integrations with Keys](doc/ListIntegrations.png)
 
-### Available methods
+### Available Message methods
 
 - `resolve()`: Sets the event type to `resolve` to resolve issues.
 - `dedupKey('')`: Sets the `dedup_key` (required when resolving).
