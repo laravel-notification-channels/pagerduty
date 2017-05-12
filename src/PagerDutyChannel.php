@@ -49,7 +49,7 @@ class PagerDutyChannel
     }
 
     /**
-     * @param $response
+     * @param \Psr\Http\Message\ResponseInterface $response
      *
      * @throws ApiError
      */
