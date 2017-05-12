@@ -12,6 +12,11 @@ class PagerDutyMessage
     protected $payload = [];
     protected $meta = [];
 
+    public static function create()
+    {
+        return new static();
+    }
+
     public function __construct()
     {
         Arr::set($this->meta, 'event_action', self::EVENT_TRIGGER);
@@ -20,7 +25,7 @@ class PagerDutyMessage
         Arr::set($this->payload, 'severity', 'critical');
     }
 
-    public function routingKey($value)
+    public function setRoutingKey($value)
     {
         return $this->setMeta('routing_key', $value);
     }
@@ -30,37 +35,37 @@ class PagerDutyMessage
         return $this->setMeta('event_action', self::EVENT_RESOLVE);
     }
 
-    public function dedupKey($key)
+    public function setDedupKey($key)
     {
         return $this->setMeta('dedup_key', $key);
     }
 
-    public function summary($value)
+    public function setSummary($value)
     {
         return $this->setPayload('summary', $value);
     }
 
-    public function source($value)
+    public function setSource($value)
     {
         return $this->setPayload('source', $value);
     }
 
-    public function severity($value)
+    public function setSeverity($value)
     {
         return $this->setPayload('severity', $value);
     }
 
-    public function timestamp($value)
+    public function setTimestamp($value)
     {
         return $this->setPayload('timestamp', $value);
     }
 
-    public function component($value)
+    public function setComponent($value)
     {
         return $this->setPayload('component', $value);
     }
 
-    public function group($value)
+    public function setGroup($value)
     {
         return $this->setPayload('group', $value);
     }

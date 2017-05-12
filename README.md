@@ -53,7 +53,7 @@ class SiteProblem extends Notification
     public function toPagerDuty($notifiable)
     {
         return PagerDutyMessage::create()
-            ->summary('There was an error with your site in the {$notifiable->service} component.');
+            ->setSummary('There was an error with your site in the {$notifiable->service} component.');
     }
 }
 ```
@@ -81,15 +81,15 @@ The `Integration Key` listed for your new integration is what you need to set in
 ### Available Message methods
 
 - `resolve()`: Sets the event type to `resolve` to resolve issues.
-- `dedupKey('')`: Sets the `dedup_key` (required when resolving).
-- `summary('')`: Sets a summary message on the event.
-- `source('')`: Sets the event source; defaults to the `hostname`.
-- `severity('')`: Sets the event severity; defaults to `critical`.
-- `timestamp('')`: Sets the `timestamp` of the event.
-- `component('')`: Sets the `component` of the event.
-- `group('')`: Sets the `group` of the event.
+- `setDedupKey('')`: Sets the `dedup_key` (required when resolving).
+- `setSummary('')`: Sets a summary message on the event.
+- `setSource('')`: Sets the event source; defaults to the `hostname`.
+- `setSeverity('')`: Sets the event severity; defaults to `critical`.
+- `setTimestamp('')`: Sets the `timestamp` of the event.
+- `setComponent('')`: Sets the `component` of the event.
+- `setGroup('')`: Sets the `group` of the event.
 - `setClass('')`: Sets the `class`.
-- `addCustomDetail('', '')`: Adds a key/value paid to the `custom_detail` of the event.
+- `addCustomDetail('', '')`: Adds a key/value pair to the `custom_detail` of the event.
 
 See the [PagerDuty v2 Events API documentation](https://v2.developer.pagerduty.com/docs/send-an-event-events-api-v2)
 for more information about what these options will do.

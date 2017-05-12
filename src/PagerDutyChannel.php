@@ -35,7 +35,7 @@ class PagerDutyChannel
 
         /** @var PagerDutyMessage $data */
         $data = $notification->toPagerDuty($notifiable);
-        $data->routingKey($routing_key);
+        $data->setRoutingKey($routing_key);
 
         try {
             $response = $this->client->post('https://events.pagerduty.com/v2/enqueue', [

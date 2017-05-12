@@ -160,7 +160,7 @@ class TestNotification extends Notification
 {
     public function toPagerDuty($notifiable)
     {
-        return
-            (new PagerDutyMessage())->source('testSource');
+        return PagerDutyMessage::create()
+            ->setSource('testSource');
     }
 }

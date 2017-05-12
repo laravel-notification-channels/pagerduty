@@ -10,8 +10,8 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     public function basic_message_has_all_values()
     {
         $message = (new PagerDutyMessage())
-            ->routingKey('testIntegration01')
-            ->summary('This is a test message');
+            ->setRoutingKey('testIntegration01')
+            ->setSummary('This is a test message');
 
         $body = $message->toArray();
 
@@ -29,9 +29,9 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     public function test_message_renders()
     {
         $message = (new PagerDutyMessage())
-            ->routingKey('testIntegration01')
-            ->summary('This is a test message')
-            ->source('testSource');
+            ->setRoutingKey('testIntegration01')
+            ->setSummary('This is a test message')
+            ->setSource('testSource');
 
         $this->assertEquals(
             [
@@ -50,15 +50,15 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     public function test_message_renders_optional_params()
     {
         $message = (new PagerDutyMessage())
-            ->routingKey('testIntegration01')
-            ->dedupKey('testMessage01')
-            ->severity('error')
-            ->timestamp('timestamp')
-            ->component('nginx')
-            ->group('app servers')
+            ->setRoutingKey('testIntegration01')
+            ->setDedupKey('testMessage01')
+            ->setSeverity('error')
+            ->setTimestamp('timestamp')
+            ->setComponent('nginx')
+            ->setGroup('app servers')
             ->setClass('ping failure')
-            ->summary('This is a test message')
-            ->source('testSource');
+            ->setSummary('This is a test message')
+            ->setSource('testSource');
 
         $this->assertEquals(
             [
@@ -82,9 +82,9 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     public function test_message_renders_custom_details()
     {
         $message = (new PagerDutyMessage())
-            ->routingKey('testIntegration01')
-            ->summary('This is a test message')
-            ->source('testSource')
+            ->setRoutingKey('testIntegration01')
+            ->setSummary('This is a test message')
+            ->setSource('testSource')
         ->addCustomDetail('ping time', '1500ms')
         ->addCustomDetail('load avg', '0.75');
 
@@ -109,9 +109,9 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     public function test_message_renders_resolve()
     {
         $message = (new PagerDutyMessage())
-            ->routingKey('testIntegration01')
-            ->source('testSource')
-            ->dedupKey('testMessage01')
+            ->setRoutingKey('testIntegration01')
+            ->setSource('testSource')
+            ->setDedupKey('testMessage01')
             ->resolve();
 
         $this->assertEquals(
