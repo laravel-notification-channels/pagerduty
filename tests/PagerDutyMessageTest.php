@@ -9,7 +9,7 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function basic_message_has_all_values()
     {
-        $message = (new PagerDutyMessage())
+        $message = PagerDutyMessage::create()
             ->setRoutingKey('testIntegration01')
             ->setSummary('This is a test message');
 
@@ -28,7 +28,7 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function test_message_renders()
     {
-        $message = (new PagerDutyMessage())
+        $message = PagerDutyMessage::create()
             ->setRoutingKey('testIntegration01')
             ->setSummary('This is a test message')
             ->setSource('testSource');
@@ -49,7 +49,7 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function test_message_renders_optional_params()
     {
-        $message = (new PagerDutyMessage())
+        $message = PagerDutyMessage::create()
             ->setRoutingKey('testIntegration01')
             ->setDedupKey('testMessage01')
             ->setSeverity('error')
@@ -81,7 +81,7 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function test_message_renders_custom_details()
     {
-        $message = (new PagerDutyMessage())
+        $message = PagerDutyMessage::create()
             ->setRoutingKey('testIntegration01')
             ->setSummary('This is a test message')
             ->setSource('testSource')
@@ -108,7 +108,7 @@ class PagerDutyMessageTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function test_message_renders_resolve()
     {
-        $message = (new PagerDutyMessage())
+        $message = PagerDutyMessage::create()
             ->setRoutingKey('testIntegration01')
             ->setSource('testSource')
             ->setDedupKey('testMessage01')
