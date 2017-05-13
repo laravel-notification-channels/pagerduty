@@ -1,6 +1,7 @@
 {
     "name": "laravel-notification-channels/pagerduty",
     "description": "A Laravel notification channel for sending PagerDuty events.",
+    "keywords": [ "laravel", "laravel-package", "notifications" "notification-channel", "pagerduty", "alerting"],
     "homepage": "https://github.com/laravel-notification-channels/pagerduty",
     "license": "MIT",
     "authors": [
