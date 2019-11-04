@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\PagerDuty\Test;
 
-use PHPUnit\Framework\TestCase;
 use NotificationChannels\PagerDuty\PagerDutyMessage;
+use PHPUnit\Framework\TestCase;
 
 class PagerDutyMessageTest extends TestCase
 {
