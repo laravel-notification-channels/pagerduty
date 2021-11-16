@@ -94,6 +94,14 @@ The `Integration Key` listed for your new integration is what you need to set in
 See the [PagerDuty v2 Events API documentation](https://v2.developer.pagerduty.com/docs/send-an-event-events-api-v2)
 for more information about what these options will do.
 
+## Usage
+
+```php
+Notification::route('PagerDuty', '[my integration key]')->notify(new BasicNotification);
+```
+
+_When using `Notification::route` be sure to reference 'PagerDuty' as the Channel._
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
