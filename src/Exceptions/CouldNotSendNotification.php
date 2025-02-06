@@ -2,9 +2,11 @@
 
 namespace NotificationChannels\PagerDuty\Exceptions;
 
-class CouldNotSendNotification extends \Exception
+use Exception;
+
+class CouldNotSendNotification extends Exception
 {
-    public static function create(\Exception $e)
+    public static function create(Exception $e): static
     {
         return new static("Cannot send message to PagerDuty: {$e->getMessage()}", 0, $e);
     }

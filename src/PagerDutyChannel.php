@@ -2,46 +2,43 @@
 
 namespace NotificationChannels\PagerDuty;
 
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PagerDuty\Exceptions\ApiError;
 use NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification;
+use Psr\Http\Message\ResponseInterface;
 
 class PagerDutyChannel
 {
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    public function __construct(Client $client)
+    public function __construct(protected Client $client)
     {
-        $this->client = $client;
     }
 
     /**
      * Send the given notification.
      *
-     * @param mixed $notifiable
-     * @param \Illuminate\Notifications\Notification $notification
+     * @param  mixed  $notifiable
+     * @param  Notification  $notification
      *
-     * @throws \NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification
+     * @throws ApiError|GuzzleException|CouldNotSendNotification
      */
-    public function send($notifiable, Notification $notification)
+    public function send(mixed $notifiable, Notification $notification): void
     {
-        if (! $routing_key = $notifiable->routeNotificationFor('PagerDuty')) {
+        if (! $routingKey = $notifiable->routeNotificationFor('PagerDuty')) {
             return;
         }
 
         /** @var PagerDutyMessage $data */
         $data = $notification->toPagerDuty($notifiable);
-        $data->setRoutingKey($routing_key);
+        $data->setRoutingKey($routingKey);
 
         try {
             $response = $this->client->post('https://events.pagerduty.com/v2/enqueue', [
                 'body' => json_encode($data->toArray()),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw CouldNotSendNotification::create($e);
         }
 
@@ -49,11 +46,11 @@ class PagerDutyChannel
     }
 
     /**
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param  ResponseInterface  $response
      *
      * @throws ApiError
      */
-    public function handleResponse($response)
+    public function handleResponse(ResponseInterface $response): void
     {
         switch ($response->getStatusCode()) {
             case 200:
