@@ -10,7 +10,7 @@ use NotificationChannels\PagerDuty\PagerDutyChannel;
 use NotificationChannels\PagerDuty\PagerDutyMessage;
 use PHPUnit\Framework\TestCase;
 
-class ChannelTest extends TestCase
+class PagerDutyChannelTest extends TestCase
 {
     public function tearDown(): void
     {
@@ -20,24 +20,24 @@ class ChannelTest extends TestCase
         Mockery::close();
     }
 
-    /** @test */
-    public function it_can_send_a_notification()
+    public function test_it_can_send_a_notification()
     {
         $response = new Response(200);
         $client = Mockery::mock(Client::class);
         $client->shouldReceive('post')
             ->once()
-            ->with('https://events.pagerduty.com/v2/enqueue',
+            ->with(
+                'https://events.pagerduty.com/v2/enqueue',
                 [
                     'body' => '{"event_action":"trigger","routing_key":"eventSource01","payload":{"source":"testSource","severity":"critical"}}',
-                ])
+                ]
+            )
             ->andReturn($response);
         $channel = new PagerDutyChannel($client);
         $channel->send(new TestNotifiable(), new TestNotification());
     }
 
-    /** @test */
-    public function it_skips_when_not_routable()
+    public function test_it_skips_when_not_routable()
     {
         $client = Mockery::mock(Client::class);
         $client->shouldNotReceive('post');
@@ -45,21 +45,20 @@ class ChannelTest extends TestCase
         $channel->send(new TestNotifiableUnRoutable(), new TestNotification());
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_an_exception_when_400_bad_request()
+    public function test_it_throws_an_exception_when_400_bad_request()
     {
         $this->expectException('\NotificationChannels\PagerDuty\Exceptions\ApiError');
-        $this->expectExceptionMessage('PagerDuty returned 400 Bad Request: Event object is invalid - Length of \'routing_key\' is incorrect (should be 32 characters)');
+        $this->expectExceptionMessage(
+            'PagerDuty returned 400 Bad Request: Event object is invalid - Length of \'routing_key\' is incorrect (should be 32 characters)'
+        );
 
         $responseBody = '{
-  "status": "invalid event",
-  "message": "Event object is invalid",
-  "errors": [
-    "Length of \'routing_key\' is incorrect (should be 32 characters)"
-  ]
-}';
+          "status": "invalid event",
+          "message": "Event object is invalid",
+          "errors": [
+            "Length of \'routing_key\' is incorrect (should be 32 characters)"
+          ]
+        }';
 
         $response = new Response(400, [], $responseBody, '1.1', 'Bad Request');
         $client = Mockery::mock(Client::class);
@@ -70,10 +69,7 @@ class ChannelTest extends TestCase
         $channel->send(new TestNotifiable(), new TestNotification());
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_the_expected_exception_if_error_response_doesnt_contain_expected_body_on_error()
+    public function test_it_throws_the_expected_exception_if_error_response_doesnt_contain_expected_body_on_error()
     {
         $this->expectException('\NotificationChannels\PagerDuty\Exceptions\ApiError');
         $this->expectExceptionMessage('PagerDuty returned 400 Bad Request:  -');
@@ -87,10 +83,7 @@ class ChannelTest extends TestCase
         $channel->send(new TestNotifiable(), new TestNotification());
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_exception_on_rate_limit()
+    public function test_it_throws_exception_on_rate_limit()
     {
         $this->expectException('\NotificationChannels\PagerDuty\Exceptions\ApiError');
         $this->expectExceptionMessage('PagerDuty returned 429 Too Many Requests');
@@ -104,10 +97,7 @@ class ChannelTest extends TestCase
         $channel->send(new TestNotifiable(), new TestNotification());
     }
 
-    /**
-     * @test
-     */
-    public function it_throws_exception_on_unexpected_code()
+    public function test_it_throws_exception_on_unexpected_code()
     {
         $this->expectException('\NotificationChannels\PagerDuty\Exceptions\ApiError');
         $this->expectExceptionMessage('PagerDuty responded with an unexpected HTTP Status: 503');
@@ -121,10 +111,7 @@ class ChannelTest extends TestCase
         $channel->send(new TestNotifiable(), new TestNotification());
     }
 
-    /**
-     * @test
-     */
-    public function it_rethrows_exception_on_client_exception()
+    public function test_it_rethrows_exception_on_client_exception()
     {
         $this->expectException('\NotificationChannels\PagerDuty\Exceptions\CouldNotSendNotification');
         $this->expectExceptionMessage('Cannot send message to PagerDuty: Test Exception');

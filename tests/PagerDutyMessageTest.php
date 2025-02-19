@@ -7,8 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class PagerDutyMessageTest extends TestCase
 {
-    /** @test */
-    public function basic_message_has_all_values()
+    public function test_basic_message_has_all_values()
     {
         $message = PagerDutyMessage::create()
             ->setRoutingKey('testIntegration01')
@@ -26,7 +25,6 @@ class PagerDutyMessageTest extends TestCase
         $this->assertTrue(is_string($body['payload']['source']));
     }
 
-    /** @test */
     public function test_message_renders()
     {
         $message = PagerDutyMessage::create()
@@ -43,11 +41,11 @@ class PagerDutyMessageTest extends TestCase
                     'severity' => 'critical',
                     'summary' => 'This is a test message',
                 ],
-            ], $message->toArray()
+            ],
+            $message->toArray()
         );
     }
 
-    /** @test */
     public function test_message_renders_optional_params()
     {
         $message = PagerDutyMessage::create()
@@ -75,19 +73,19 @@ class PagerDutyMessageTest extends TestCase
                     'class' => 'ping failure',
                 ],
                 'dedup_key' => 'testMessage01',
-            ], $message->toArray()
+            ],
+            $message->toArray()
         );
     }
 
-    /** @test */
     public function test_message_renders_custom_details()
     {
         $message = PagerDutyMessage::create()
             ->setRoutingKey('testIntegration01')
             ->setSummary('This is a test message')
             ->setSource('testSource')
-        ->addCustomDetail('ping time', '1500ms')
-        ->addCustomDetail('load avg', '0.75');
+            ->addCustomDetail('ping time', '1500ms')
+            ->addCustomDetail('load avg', '0.75');
 
         $this->assertEquals(
             [
@@ -102,11 +100,11 @@ class PagerDutyMessageTest extends TestCase
                         'load avg' => '0.75',
                     ],
                 ],
-            ], $message->toArray()
+            ],
+            $message->toArray()
         );
     }
 
-    /** @test */
     public function test_message_renders_resolve()
     {
         $message = PagerDutyMessage::create()
@@ -124,7 +122,8 @@ class PagerDutyMessageTest extends TestCase
                     'severity' => 'critical',
                 ],
                 'dedup_key' => 'testMessage01',
-            ], $message->toArray()
+            ],
+            $message->toArray()
         );
     }
 }
